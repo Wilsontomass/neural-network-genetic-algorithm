@@ -6,6 +6,11 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\usepackage{csquotes}
+
+\usepackage[style=authoryear-ibid,backend=biber]{biblatex}
+
+\addbibresource{sources.bib}% Syntax for version >= 1.2
 
 \pagestyle{fancy}
 
@@ -15,7 +20,7 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\title{Evolutionära Neurala Nätverk, ett Effektivitetsstudie}
+\title{Evolutionära Neuronala Nätverk, ett Effektivitetsstudie}
 \author{Tomass Wilson\\thmwi@kth.se}
 
 \begin{document}
@@ -29,6 +34,8 @@
   \tableofcontents
 
   \section{inledning}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Programmerare har alltid velat lösa problem, hellre med hjälp av en dator. När Artificiella Neuronala Nätverk (ANN) började utvecklas kunde man applicera dem på problem som före-detta verkade omöjliga, såsom att urskilja ansikter, eller kategorisera bilder \cite{hopfield1988artificial}. 
+
+\printbibliography
 
 \end{document}
