@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt, twocolumn]{report}
+\documentclass[a4paper, 11pt, twocolumn]{article}
 
 \usepackage[swedish]{babel}
 \usepackage[T1]{fontenc}
@@ -15,7 +15,7 @@
 \pagestyle{fancy}
 
 \lhead{Tomass Wilson}
-\rhead{19991030-0616}
+\rhead{Grupp B}
 \rfoot{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -33,8 +33,17 @@
 
   \tableofcontents
 
-  \section{inledning}
-    Programmerare har alltid velat lösa problem, hellre med hjälp av en dator. När Artificiella Neuronala Nätverk (ANN) började utvecklas kunde man applicera dem på problem som före-detta verkade omöjliga, såsom att urskilja ansikter, eller kategorisera bilder \cite{hopfield1988artificial}. 
+  \section{Inledning}
+    Programmerare har alltid velat lösa problem, hellre med hjälp av en dator. När Artificiella Neurala Nätverk (ANN) började utvecklas kunde man applicera dem på problem som före-detta verkade omöjliga, såsom att urskilja ansikten eller kategorisera bilder \parencite{hopfield1988artificial}. Inlärningsprocessen tar ofta flera timmar och bygger på att slumpa fram de kopplingarna mellan noder (neuroner) sådan att en viss korrekthet på resultatet nås för det specificerade problemet. Effektiviteten för ANN brukar definieras vid 2 variabler; inlärningstid och korrekthet, och detta mäts med hjälp av standardiserade tester. Industri-standarden för sådana test är CIFAR-10, en databas av 60 000 bilder, som kategoriseras in i 10 grupper \parencite{krizhevsky2014cifar}. Med detta kan man okomplicerat jämföra olika ANN. En viktig faktor som påverkar inlärningen av en ANN är meta-variabler, såsom antal noder per lager, antal lager, aktiveringsfunktionen, etcetera. Dessa meta-variabler kan ställas in manuellt, men detta brukar leda till att nätverket inte når sitt maximala precision, eller förlänger inlärningstiden märkbart. Lösningen till detta har tidigare varit att iterera genom alla möjliga combinationer meta-variabler och testa dem var-för-sig. En föreslagen lösning till detta är att istället evolutionärt optimera slumpmässigt valda meta-variabler för att undvika onödiga tester av ineffektiva kombinationer av dessa. Frågeställningen lyder som följande: Vilken inställning av Matt Harveys neurala nätverk har kortast inlärningstid?
+
+  \subsection{Syfte}
+  Syftet med denna studie är att undersöka om inlärandeprocessen för ett neuralt nätverk kan förkortas med hjälp av en evolutionär process.
+
+  \subsection{Frågeställning}
+  Vilken inställning av Matt Harveys neurala nätverk har kortast inlärningstid?
+  \section{Bakgrund & Teori}
+
+
 
 \printbibliography
 
