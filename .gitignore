@@ -1,1 +1,11 @@
 __pycache__/*
+~WRL0811.tmp
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.toc

@@ -46,15 +46,29 @@
     En Artificiell Neural Nätverk (ANN) är en samling sammankopplade noder sammanställda i flera lager. Varje nod har ett värde och en aktiveringsfunktion. En nod har flera inkommande länkar och utgående länkar till andra noder. Inkommande värden multipliceras med en slumpmässig vikt och sedan multipliceras alla inkommande värden tillsammans. Detta nya värde kläms sedan ner till ett värde mellan 0 och 1. Denna process kallas \textit{aktiveringsfunktionen} och slutgiltiga resultatet är nodens \textit{värde}. Antal noder i input- och outputlagern bestäms i förhand beroende på hur nätverket ska användas.
 
     \subsection{Meta-variabler}
-    För att ett ANN ska kunna skapas behövs några parametrar. Dessa \textit{meta-variabler} bestämmer övergripande hur nätverket ser ut, dess storlek och konstruktion.
+    För att ett ANN ska kunna skapas behövs några startparametrar. Dessa \textit{meta-variabler} bestämmer övergripande hur nätverket ser ut, dess storlek och konstruktion. Undersökningen som beskrivs i denna artikel kommer att behandla dessa meta-variabler:
+    \begin{enumerate}
+      \item \# Neuroner
+      Detta är antal individuella neuroner i varje lager. Detta experiment kommer test värden mellan 64 – 1024 neuroner per lager.
+      \item \# Lager
+      Detta är antal lager exklusive input- och outputlagern, dessa heter \textit{gömda lager} och antalet varierar mellan 1 - 4
+      \item Aktiveringsfunktion
+      Aktiveringsfunktioner kommer i flera olika sorter, som brukar likna s kurvor. Vilken aktiveringsfunktion man använder påverkar hur komplex ett nätverk kan bli och dess maximala träffsäkerhet \parencite{jain1996artificial}. Detta experiment använder sig av aktiveringsfunktionerna: \textit{sigmoid, tanh} \parencite{karlik2011performance}, \textit{Exponential Linear Unit} (ELU) \parencite{clevert2015fast} och \textit{Rectified Linear Unit} (ReLU) \parencite{xu2015empirical}
+      \item Optimeringsfunktion
+      Optimeringsfunktionen är den process som nätverket använder för att optimeras. Optimeringsfunktioner förbättrar nätverket genom att ändra på kopplingar och dess vikter mellan neuroner och mäta förändringen i träffsäkerhet, och behåller bara de ändringar som är gynnsamma \parencite{TypesofO34:online}. Funktionerna som ska testas är: \textit{rmsprop, sgd, adam, adagrad, adadelta, adamax, nadam} \parencite{kingma2014adam}
+    \end{enumerate}
+
 
     \subsection{Evolutionär Inlärningsprocess}
+    Som i naturen fungerar den evolutionära algoritmen som ett slags naturligt urval. Vid första början skapas en population med ett visst antal neurala nätverk med slumpmässigt valda meta-variabler, som borjar inlärningen tills den har nått en viss träffsäkerhet. Tiden detta tar mäts sedan , vilket då blir nätverkets \textit{fitness}. Nätverket i populationen som hade lägst fitness, ”dödas” och ersätts av nätverk som är en kombination av 2 levande nätverk, ”föräldrarna”, och får sedan en slumpmässig mutation (detta för att populationen ska inte bli för homogen). Efter flera ”generationer” har förmodligen det bästa nätverket en sammanställning meta-variabler som är optimerade för användningsområdet. \parencite{yao1997new}
 
     \subsection{CIFAR-10}
     Industri-standarden för att testa ANN är CIFAR-10, en databas av 60 000 bilder, som kategoriseras in i 10 grupper \parencite{krizhevsky2014cifar}. Med detta kan man okomplicerat jämföra olika ANN, genom att mäta hur snabbt och väl de kan identifiera vilken kategori en bild tillhör. Som input får nätverket en bild av 32 x 32 pixlar, som mäts in i Input lagern som en matrix. Output lagern har 10 noder, med ett värde mellan 0 och 1 för att visa hur mycket bilden ”passar” in i en viss kategori. Korrektheten mäts som andel gånger nätverket har placerat bilden i korrekt kategori
 
   \section{Metod}
-  För att jämföra de två olika metoder för att bestämma bästa meta-variabler använder vi av CIFAR-10 databasen för materialet. Själva processen av populationskapande, inlärning, mätning och evolution är skriven av Matt Harvey \parencite{harvey2017}. All kod skrivs i python 3.6, och använder sig till huvuddel av tqdm, keras och tensorflow paketen för att optimera och skapa nätverken. Versionerna av samtliga paket ses i tabell \ref{paketversioner}.
+  För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017}. All kod skrevs i python 3.6, och använder sig till huvuddel av tqdm, keras och tensorflow paketen för att optimera och skapa nätverken. Versionerna av samtliga paket ses i tabell \ref{paketversioner}.
+
+  Till först så testades den iterativa processen genom att köra brute.py filen. Alla 672 möjliga kombinationer meta-variabler testades och en slutsiffra på tiden det tog antecknades. Detta ger en basnivå som kan jämföras med den evolutionära processen. Sedan kördes den evolutionära processen genom att köra main.py filen, och tiden skrevs ned.
 
   \begin{table}
     \centering
@@ -75,8 +89,6 @@
     \caption{Paketversioner}
     \label{paketversioner}
   \end{table}
-
-  
 
   \section{Resultat}
 
