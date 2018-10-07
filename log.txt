@@ -1,4 +1,0 @@
-09/06/2018 01:48:02 PM - INFO - ***Evolving 10 generations with population 20***
-09/06/2018 01:48:02 PM - INFO - ***Doing generation 1 of 10***
-09/13/2018 10:14:13 AM - INFO - ***Evolving 10 generations with population 20***
-09/13/2018 10:14:13 AM - INFO - ***Doing generation 1 of 10***
