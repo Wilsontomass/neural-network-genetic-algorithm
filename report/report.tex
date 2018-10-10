@@ -56,12 +56,16 @@
     För att ett ANN ska kunna skapas behövs några startparametrar. Dessa \textit{meta-variabler} bestämmer övergripande hur nätverket ser ut, dess storlek och konstruktion. Undersökningen som beskrivs i denna artikel kommer att behandla dessa meta-variabler:
     \begin{enumerate}
       \item \# Neuroner
+      \newline
       Detta är antal individuella neuroner i varje lager. Detta experiment kommer test värden mellan 64 – 1024 neuroner per lager.
       \item \# Lager
+      \newline
       Detta är antal lager exklusive input- och outputlagern, dessa heter \textit{gömda lager} och antalet varierar mellan 1 - 4
       \item Aktiveringsfunktion
+      \newline
       Aktiveringsfunktioner kommer i flera olika sorter, som brukar likna s kurvor. Vilken aktiveringsfunktion man använder påverkar hur komplex ett nätverk kan bli och dess maximala träffsäkerhet \parencite{jain1996artificial}. Detta experiment använder sig av aktiveringsfunktionerna: \textit{sigmoid, tanh} \parencite{karlik2011performance}, \textit{Exponential Linear Unit} (ELU) \parencite{clevert2015fast} och \textit{Rectified Linear Unit} (ReLU) \parencite{xu2015empirical}
       \item Optimeringsfunktion
+      \newline
       Optimeringsfunktionen är den process som nätverket använder för att optimeras. Optimeringsfunktioner förbättrar nätverket genom att ändra på kopplingar och dess vikter mellan neuroner och mäta förändringen i träffsäkerhet, och behåller bara de ändringar som är gynnsamma \parencite{TypesofO34:online}. Funktionerna som ska testas är: \textit{rmsprop, sgd, adam, adagrad, adadelta, adamax, nadam} \parencite{kingma2014adam}
     \end{enumerate}
 
