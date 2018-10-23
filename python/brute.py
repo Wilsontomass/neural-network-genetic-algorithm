@@ -74,7 +74,8 @@ def generate_network_list(nn_param_choices):
 
                     networks.append(network_obj)
 
-    return networks
+    # im inverting the list to make it start with the big networks, for stress testing
+    return list(reversed(networks))
 
 def main():
     """Brute force test every network."""

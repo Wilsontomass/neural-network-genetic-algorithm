@@ -11,3 +11,5 @@ __pycache__/*
 *.toc
 *.xml
 *.pyc
+*.tmp
+report/~$Text.docx

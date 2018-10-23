@@ -5,11 +5,30 @@ Based on:
     https://github.com/fchollet/keras/blob/master/examples/mnist_mlp.py
 
 """
+# import os
+# os.environ["CUDA_VISIBLE_DEVICES"]="-1"
+
+import gc
+from keras import backend as k
+
 from keras.datasets import mnist, cifar10
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.utils.np_utils import to_categorical
 from keras.callbacks import EarlyStopping
+
+## extra imports to set GPU options
+import tensorflow as tf
+###################################
+# TensorFlow wizardry
+config = tf.ConfigProto()
+
+# Don't pre-allocate memory; allocate as-needed
+config.gpu_options.allow_growth = True
+
+# Create a session with the above options specified.
+k.tensorflow_backend.set_session(tf.Session(config=config))
+###################################
 
 # Helper: Early stopping.
 early_stopper = EarlyStopping(patience=5)
@@ -120,5 +139,10 @@ def train_and_score(network, dataset):
               callbacks=[early_stopper])
 
     score = model.evaluate(x_test, y_test, verbose=0)
+
+    # clears memory, hope this works
+    del model
+    gc.collect()
+    k.clear_session()
 
     return score[1]  # 1 is accuracy. 0 is loss.
