@@ -77,7 +77,7 @@
     Industri-standarden för att testa ANN är CIFAR-10, en databas av 60 000 bilder, som kategoriseras in i 10 grupper \parencite{krizhevsky2014cifar}. Med detta kan man okomplicerat jämföra olika ANN, genom att mäta hur snabbt och väl de kan identifiera vilken kategori en bild tillhör. Som input får nätverket en bild av 32 x 32 pixlar, som mäts in i Input lagern som en matrix. Output lagern har 10 noder, med ett värde mellan 0 och 1 för att visa hur mycket bilden ”passar” in i en viss kategori. Korrektheten mäts som andel gånger nätverket har placerat bilden i korrekt kategori
 
   \section{Metod}
-  För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017}. All kod skrevs i python 3.6, och använder sig till huvuddel av tqdm, keras och tensorflow paketen för att optimera och skapa nätverken. Versionerna av samtliga paket ses i tabell \ref{paketversioner}.
+  För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017}. All kod skrevs i python 3.6 och kördes på Windows 10, och använder sig till huvuddel av tqdm, keras och tensorflow paketen för att optimera och skapa nätverken. Versionerna av samtliga paket ses i tabell \ref{paketversioner}.
 
   Till först så testades den iterativa processen genom att köra brute.py filen. Alla 672 möjliga kombinationer meta-variabler testades och en slutsiffra på tiden det tog antecknades. Detta ger en basnivå som kan jämföras med den evolutionära processen. Sedan kördes den evolutionära processen genom att köra main.py filen, och tiden skrevs ned.
 
@@ -99,6 +99,19 @@
     \end{tabular}
     \caption{Paketversioner}
     \label{paketversioner}
+  \end{table}
+
+  \begin{table}
+    \centering
+    \begin{tabular}{c|c}
+      Komponent & Specifikation \\
+      \hline
+      GPU: & RTX 2080 @ 1950 MHz core, 7263 MHz mem \\
+      CPU: & Intel i7 8700 @ 4.28 GHz \\
+      Minne: & 32 GB @ 2666 MHz \\
+    \end{tabular}
+    \caption{Hårdvara}
+    \label{hårdvara}
   \end{table}
 
   \section{Resultat}
