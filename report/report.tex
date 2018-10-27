@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[a4paper, 12pt]{article}
 
 \usepackage[swedish]{babel}
 \usepackage[T1]{fontenc}
@@ -7,6 +7,9 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{csquotes}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{lmodern}
 
 \usepackage[style=authoryear-ibid,backend=biber]{biblatex}
 
@@ -14,25 +17,29 @@
 
 \pagestyle{fancy}
 
+{\fontfamily{qcr}\selectfont
+
 \lhead{Tomass Wilson}
-\rhead{Grupp B}
+\rhead{Grupp B:7}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
-\title{Evolutionära Neurala Nätverk, ett Effektivitetsstudie}
-\author{Tomass Wilson\\thmwi@kth.se}
+\title{Bestämmande av optimal arkitektur för artificiella neuronnät med evolution}
+\author{Tomass Wilson\\thmwi@kth.se\\Grupp B:7}
 
 \begin{document}
 
-  \pagenumbering{roman}
+  \pagenumbering{gobble}
 
   \maketitle
 
   \begin{abstract}
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    Maskininlärning används mer och mer i dagens industrier och programutveckling. Utvecklingen av artificiella neuronnät bör optimeras för att underlätta applikationen av denna viktiga teknologi till allt fler och fler områden. Vid körning av Matt Harveys python program syns ett tydligt sätt tiden detta tar kan förkortas, genom användning av en evolutionär algoritm som fungerar på principerna av naturligt urval. Denna process är byggd för att bestämma det optimala neuronnätsarkitektur, då olika kombinationer av meta-variabler såsom antal neuroner och optimeringsfunktion kan starkt påverka nätverkets träffsäkerhet och inlärningstid. Undersökningen visar på förbättringar vid nästan en hel storleksordning gentemot iterativ sökning, då processtiden vid denna studie gick från 18 till 3 timmar. Detta kan appliceras på flera olika implementeringar av artificiella neuronnät för att förenkla och effektivisera deras utveckling.
   \end{abstract}
 
   \newpage
+
+  \pagenumbering{roman}
 
   \tableofcontents
 
@@ -41,16 +48,19 @@
   \pagenumbering{arabic}
 
   \section{Inledning}
-    Programmerare har alltid velat lösa problem, hellre med hjälp av en dator. När Artificiella Neurala Nätverk (ANN) började utvecklas kunde man applicera dem på problem som före-detta verkade omöjliga, såsom att urskilja ansikten eller kategorisera bilder \parencite{hopfield1988artificial}. Det blir en allt större och viktigare del av moderna program och då finns det stor anledning till att försöka korta ner tiden det tar för att bygga ett sådant nätverk. Inlärningsprocessen tar ofta flera timmar och bygger på att slumpa fram de kopplingarna mellan noder (neuroner) sådan att en viss korrekthet på resultatet nås för det specificerade problemet. Effektiviteten för ANN brukar definieras vid 2 variabler; inlärningstid och korrekthet, och detta mäts med hjälp av standardiserade tester. En viktig faktor som påverkar inlärningen av en ANN är meta-variabler, såsom antal noder per lager, antal lager, aktiveringsfunktionen, etcetera. Dessa meta-variabler kan ställas in manuellt, men detta brukar leda till att nätverket inte når sitt maximala precision, eller förlänger inlärningstiden märkbart. Lösningen till detta har tidigare varit att iterera genom alla möjliga combinationer meta-variabler och testa dem var-för-sig. En föreslagen lösning till detta är att istället evolutionärt optimera slumpmässigt valda meta-variabler för att undvika onödiga tester av ineffektiva kombinationer av dessa.
+    Programmerare har alltid velat lösa problem, hellre med hjälp av en dator. När Artificiella Neuronnät (ANN) började utvecklas kunde man applicera dem på problem som före-detta verkade omöjliga, såsom att urskilja ansikten eller kategorisera bilder \parencite{hopfield1988artificial}. Inlärningsprocessen tar ofta flera timmar och bygger på att slumpa fram de kopplingarna mellan neuroner sådan att en viss träffsäkerhet på resultatet nås för det specificerade problemet. En viktig faktor som påverkar inlärningen av en ANN är meta-variabler, såsom antal neuroner per lager, antal lager, aktiveringsfunktionen, etcetera. Dessa meta-variabler kan ställas in manuellt av användaren, men detta brukar leda till att neuronnätet inte når sitt maximala träffsäkerhet, eller förlänger inlärningstiden märkbart. Lösningen till detta har tidigare varit att iterera genom alla möjliga combinationer meta-variabler och testa dem var-för-sig. En föreslagen lösning till detta är att istället evolutionärt optimera slumpmässigt valda meta-variabler för att undvika onödiga tester av ineffektiva kombinationer av dessa.
 
     \subsection{Syfte}
     Syftet med denna studie är att undersöka om tiden för inlärandeprocessen för ett neuralt nätverk kan förkortas med hjälp av en evolutionär process. Precisionen för nätverket ska vara helst den samma som vid en iterativ inlärningsprocess, för att kunna ge en komparabel alternativ.
     \subsection{Frågeställning}
-    Vilken inställning av Matt Harveys neurala nätverk har kortast inlärningstid?
+    Vilken inställning av Matt Harveys pytonprogram uppskattar de optimala meta-variabler på kortast tid?
 
   \section{Bakgrund \& Teori}
+    \subsection{CIFAR-10}
+    Industri-standarden för att testa ANN är CIFAR-10, en databas av 60 000 bilder, som kategoriseras in i 10 grupper \parencite{krizhevsky2014cifar}. Med detta kan man okomplicerat jämföra olika ANN, genom att mäta hur snabbt och väl de kan identifiera vilken kategori en bild tillhör. Som input får nätverket en bild av 32 x 32 pixlar, som mäts in i Input lagern som en matrix. Output lagern har 10 noder, med ett värde mellan 0 och 1 för att visa hur mycket bilden ”passar” in i en viss kategori. Korrektheten mäts som andel gånger nätverket har placerat bilden i korrekt kategori
+
     \subsection{Artificiella Neurala Nätverk}
-    En Artificiell Neural Nätverk (ANN) är en samling sammankopplade noder sammanställda i flera lager. Varje nod har ett värde och en aktiveringsfunktion. En nod har flera inkommande länkar och utgående länkar till andra noder. Inkommande värden multipliceras med en slumpmässig vikt och sedan multipliceras alla inkommande värden tillsammans. Detta nya värde kläms sedan ner till ett värde mellan 0 och 1. Denna process kallas \textit{aktiveringsfunktionen} och slutgiltiga resultatet är nodens \textit{värde}. Antal noder i input- och outputlagern bestäms i förhand beroende på hur nätverket ska användas.
+    En Artificiell Neural Nätverk (ANN) är en samling sammankopplade neuroner sammanställda i flera \textit{lager}. Varje nod har ett värde och en aktiveringsfunktion, och befinner sig i ett lager. En nod har flera inkommande länkar och utgående länkar till andra neuroner i lager under och över den respektive. Inkommande värden multipliceras med en slumpmässig vikt och sedan multipliceras alla inkommande värden tillsammans. Detta nya värde kläms sedan ner till ett värde mellan 0 och 1. Denna process kallas \textit{aktiveringsfunktionen} och slutgiltiga resultatet är nodens \textit{värde}. Antal neuroner i input- och outputlagern bestäms i förhand beroende på hur nätverket ska användas. I denna studie är inputlagern en matrix med 32x32 neuroner som representerar en svartvit bild, där ett högre värde (1) representerar vit och ett lägre (0) svart. Outputlagern uppbyggs av 10 neuroner, där neuronen med högsta värde representerar nätverkets \textit{gissning} för vilket kategori bilden passar in i. Till en början är alla neuronkopplingar och deras vikter slumpmässigt valda, vilket gör att den ger helt slumpmässiga svar. För att optimera nätverket krävs en \textit{optimeringsfunktion}.
 
     \subsection{Meta-variabler}
     För att ett ANN ska kunna skapas behövs några startparametrar. Dessa \textit{meta-variabler} bestämmer övergripande hur nätverket ser ut, dess storlek och konstruktion. Undersökningen som beskrivs i denna artikel kommer att behandla dessa meta-variabler:
@@ -71,17 +81,16 @@
 
 
     \subsection{Evolutionär Inlärningsprocess}
-    Som i naturen fungerar den evolutionära algoritmen som ett slags naturligt urval. Vid första början skapas en population med ett visst antal neurala nätverk med slumpmässigt valda meta-variabler, som borjar inlärningen tills den har nått en viss träffsäkerhet. Tiden detta tar mäts sedan , vilket då blir nätverkets \textit{fitness}. Nätverket i populationen som hade lägst fitness, ”dödas” och ersätts av nätverk som är en kombination av 2 levande nätverk, ”föräldrarna”, och får sedan en slumpmässig mutation (detta för att populationen ska inte bli för homogen). Efter flera ”generationer” har förmodligen det bästa nätverket en sammanställning meta-variabler som är optimerade för användningsområdet. \parencite{yao1997new}
+    Som i naturen fungerar den evolutionära algoritmen som ett slags naturligt urval. Vid första början skapas en population med ett visst antal neurala nätverk med slumpmässigt valda meta-variabler. Varje nätverk får sedan påbörja inlärningsprocessen, tills inlärningen når ett lokalt maximum och kan inte lära sig något mer. Tiden inlärningen tar och nätverkets träffsäkerhet mäts och kombineras, vilket då blir nätverkets \textit{fitness}. Nätverket i populationen som hade lägst fitness, ”dödas” och ersätts av nätverk som är en kombination av 2 levande nätverk, ”föräldrarna”, och får sedan en slumpmässig mutation (detta för att populationen ska inte bli för homogen). Efter flera \textit{generationer} har förmodligen det bästa nätverket en sammanställning meta-variabler som är optimerade för användningsområdet. \parencite{yao1997new}
 
-    \subsection{CIFAR-10}
-    Industri-standarden för att testa ANN är CIFAR-10, en databas av 60 000 bilder, som kategoriseras in i 10 grupper \parencite{krizhevsky2014cifar}. Med detta kan man okomplicerat jämföra olika ANN, genom att mäta hur snabbt och väl de kan identifiera vilken kategori en bild tillhör. Som input får nätverket en bild av 32 x 32 pixlar, som mäts in i Input lagern som en matrix. Output lagern har 10 noder, med ett värde mellan 0 och 1 för att visa hur mycket bilden ”passar” in i en viss kategori. Korrektheten mäts som andel gånger nätverket har placerat bilden i korrekt kategori
+    I denna undersökning kommer systemet utföra 10 generationer, med 20 neuronnät var. Varje generation kommer undersökas och sedan kommer det 12 sämsta neuronnät (de med lång inlärningstid eller dålig träffsäkerhet) raderas (+- några, för att populationen inte ska bli homogen).  Nya nät skapas för att få populationen upp till 20 genom att slumpmässigt välja meta-variabler från två existerande nät. Sist så ändras en meta variabel helt slumpmässigt (en mutation).
 
   \section{Metod}
-  För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017}. All kod skrevs i python 3.6 och kördes på Windows 10, och använder sig till huvuddel av tqdm, keras och tensorflow paketen för att optimera och skapa nätverken. Versionerna av samtliga paket ses i tabell \ref{paketversioner}.
+  För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017} med några modifieringar för att spara minne gjord av Tomass Wilson. All kod skrevs i python 3.6 och kördes på Windows 10, och använder sig till huvuddel av keras och tensorflow paketen för att optimera och skapa neuronnäten. Versionerna av samtliga paket ses i tabell \ref{paketversioner}. Hårdvaran som användes i denna undersökning ses i tabell \ref{hårdvara}.
 
-  Till först så testades den iterativa processen genom att köra brute.py filen. Alla 672 möjliga kombinationer meta-variabler testades och en slutsiffra på tiden det tog antecknades. Detta ger en basnivå som kan jämföras med den evolutionära processen. Sedan kördes den evolutionära processen genom att köra main.py filen, och tiden skrevs ned.
+  Till först så testades den iterativa processen genom att köra brute.py filen. Alla 672 möjliga kombinationer meta-variabler testades och en slutsiffra på tiden hela processen tog antecknades. Detta ger en basnivå som kan jämföras med den evolutionära processen. Sedan kördes den evolutionära processen med 10 generationer av 20 neuronnät var genom att köra main.py filen, och tiden skrevs ned.
 
-  \begin{table}
+\begin{table}[htb]
     \centering
     \begin{tabular}{c|c}
       Paket & Version \\
@@ -99,9 +108,9 @@
     \end{tabular}
     \caption{Paketversioner}
     \label{paketversioner}
-  \end{table}
+\end{table}
 
-  \begin{table}
+\begin{table}[htb]
     \centering
     \begin{tabular}{c|c}
       Komponent & Specifikation \\
@@ -112,12 +121,160 @@
     \end{tabular}
     \caption{Hårdvara}
     \label{hårdvara}
-  \end{table}
+\end{table}
 
   \section{Resultat}
 
-  \section{Diskussion}
+  Dessa resultat insamlades över flera dagar, och datorn programmet kördes på användes lätt under den tiden.
 
+  Programmet slutar med att presentera de fem bästa neuronnät som den kunde hitta. Resultatet från den evolutionära processen visas i tabell \ref{evo}, och för den iterativa i tabell \ref{iterativ}. Totala tiden för den evolutionära algoritmen samt iterativa ses i tabell \ref{total}.
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+      Träffsäkerhet & \#Neuroner & \#Lager & Akt-funk. & Opt-funk. \\
+      \hline
+      56.12\% & 256 & 4 & ELU & adamax \\
+      55.75\% & 256 & 4 & ELU & adamax \\
+      55.65\% & 512 & 4 & ELU & adamax \\
+      55.64\% & 256 & 4 & ELU & adamax \\
+      55.57\% & 256 & 4 & ELU & adamax \\
+    \end{tabular}
+    \caption{5 bästa neuronnät efter evolutionär sökning.}
+    \label{evo}
+\end{table}
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+        Träffsäkerhet & \#Neuroner & \#Lager & Akt-funk. & Opt-funk. \\
+        \hline
+        55.52\% & 768 & 2 & ELU & adamax \\
+        55.47\% & 1024 & 2 & ELU & adamax \\
+        55.33\% & 512 & 3 & ELU & adamax \\
+        55.30\% & 768 & 2 & sigmoid & adamax \\
+        55.21\% & 768 & 4 & sigmoid & adamax \\
+    \end{tabular}
+    \caption{5 bästa neuronnät efter iterativ sökning.}
+    \label{iterativ}
+\end{table}
+
+\begin{table}[htb]
+    \centering
+    \begin{tabular}{c|c|c}
+      Inställning & Tid & Maximal Träffsäkerhet\\
+      \hline
+      Evolutionär: & 3h 43m 14s & 56.12\% \\
+      Iterativ: & 18h 53m 40s & 55.52\% \\
+    \end{tabular}
+    \caption{Total tid för hela processen}
+    \label{total}
+\end{table}
+
+\newpage
+
+För att få ett närmare inblick i den evolutionära processen så kördes den i flera omgångar och träffsäkerhet för varje omgång/generation presenteras i figur \ref{generation}.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+	\begin{axis}[
+		height=9cm,
+		width=9cm,
+		grid=major,
+        legend pos=south east,
+        title=Träffsäkerhet genom tid,
+        xlabel=Generation,
+		ylabel=Genomsnittlig träffsäkerhet (\%),
+        xmin=0,   xmax=11,
+    	ymin=35,   ymax=60,
+    	xtick={1,2,...,10},
+    	extra y ticks={35,60},
+	]
+
+	\addplot coordinates {
+        (1, 40.94)
+        (2, 43.86)
+        (3, 46.03)
+        (4, 48.33)
+        (5, 50.47)
+        (6, 46.85)
+        (7, 53.77)
+        (8, 54.69)
+        (9, 54.39)
+        (10, 54.48)
+	};
+	\addlegendentry{1a Körning}
+
+    \addplot coordinates {
+        (1, 43.29)
+        (2, 46.89)
+        (3, 50.69)
+        (4, 51.89)
+        (5, 52.39)
+        (6, 51.84)
+        (7, 52.09)
+        (8, 52.49)
+        (9, 52.35)
+        (10, 53.31)
+	};
+	\addlegendentry{2a Körning}
+
+    \addplot coordinates {
+        (1, 44.02)
+        (2, 42.09)
+        (3, 47.54)
+        (4, 47.13)
+        (5, 49.31)
+        (6, 51.56)
+        (7, 48.41)
+        (8, 53.02)
+        (9, 54.08)
+        (10, 53.90)
+	};
+	\addlegendentry{3e Körning}
+
+    \addplot coordinates {
+        (1, 45.97)
+        (2, 46.70)
+        (3, 49.53)
+        (4, 53.21)
+        (5, 51.20)
+        (6, 49.25)
+        (7, 52.21)
+        (8, 54.12)
+        (9, 52.82)
+        (10, 55.16)
+	};
+	\addlegendentry{4e Körning}
+
+	\end{axis}
+\end{tikzpicture}
+\caption{Träffsäkerhet för varje generation}
+\label{generation}
+\end{figure}
+
+
+  \section{Diskussion}
+  Enligt resultatet som redovisas i tabell \ref{total} så kan frågeställningen enkelt besvaras. En skillnad på 10h 10m visar på den stora fördelen med att använda den evolutionära processenprocessen med inga förluster av träffsäkerhet. Däremot måste implementationen av systemet diskuteras samt hur applicerbart detta är på andra datamängder/maskininlärningsproblem. Studien som genomfördes riktar sig in på bara ett av flera andra problem som maskininlärning appliceras på. Vissa användningar, där neuronnätets arkitektur är given eller inlärningstiden är väldigt kort behövs inte sådana metoder, då den bara försvårarar för användaren. Åt andra sidan så kan detta system underlätta för sökandet av meta-variabler då dessa är okända, och kommer troligen ge nästan lika bra output som en iterativ process.
+
+  Bästa nätverket som hittades i första evolutionära körning (tabell \ref{evo}) är inte den samma som den som hittades av den iterativa processen (tabell \ref{iterativ}). Detta är inte ett stort problem, då de fick nästan samma maximala träffsäkerhet, men de kan ha olika inlärningstid. Totala antalet neuroner är väldigt lika, $256 * 4 = 1024$ medan $768 * 2 = 1536$, vilket tyder på olika lösningar till lika problem. Dessutom, eftersom optimeringsprocessen utgår ifrån att slumpmässigt försöka förbättra varje neuronnät, så kan man få olika träffsäkerhet vid varje optimeringsomgång för \textit{samma} sammanställning meta-variabler. Däremot kommer detta avvikning vara lite, och inte spela mycket roll, även om det leder till att man väljer än eller annan arkitektur för neuronnätet. Om det absolut bästa sammanställning meta variabler är nödvändigt, kan processen köras flera gånger och det neuronnät som har konsekvent bäst träffsäkerhet kan användas.
+
+  Genom att granska resultatet i figur \ref{generation} kan det synas hur vid varje omgång så förbättras populationen från en slumpmässig sammanställning neuronnät vid första generation till en population där nästa alla individer är av samma, effektiva design (från ~45\% till ~55\%). Även om vid tillfällen med fler/olika meta-variabler så kräver den evolutionära processen fler generationer och större populationer för att klara av samma förbättring, så kommer den iterativa processen alltid att behöva gå igenom alla kombinationer vilket då leder till att den evolutionära processen ger stora tidsfördelar med nästan samma resultat i det flesta fall.
+
+  \subsection{Felkällor}
+
+  En fällkälla som uppstår vid denna undersökning är att datorn kan inte alltid leverera samma prestanda vid alla tillfällen, särskilt om den används under samma tid. Dock är detta systematiskt för båda processen, och skillnaden är troligen så liten att den inte kunde påverka resultaten.
+
+  \subsection{Fortsatta studier}
+
+  Fler studier bör göras med andra sammanställningar meta-variabler och fler omgångar, för att testa den evolutionära processen med svårare starttillstånd. Det är troligt att vid denna studie fanns ett få antal optimala neuronnät (träffsäkerhet på 54–55\%) existerande redan i populationen för första generationen. En intressant undersökning skulle kunna testa om det evolutionära systemet kan utveckla det optimala kombination bara med hjälp av naturligt urval, istället för att bara ”sprida” det effektivast neuronnät genom populationen.
+
+  \subsection{Slutsats}
+
+  Slutsatsen för denna studie är att en evolutionär process för urval av meta-variabler kan kraftigt förkorta tiden det krävs för en sådan sökning. Vid tillfällen med långa inlärningstider/stort antal meta-variabler lönar sig metoden mest, och den kan öppna dörrar för nya appliceringar av maskininlärning där förut utvecklingstiden har varit ett hinder för programmerare.
+
+\addcontentsline{toc}{section}{Referenser}
 
 \printbibliography
 
