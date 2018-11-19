@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{lmodern}
+\usepackage{float}
 
 \usepackage[style=authoryear-ibid,backend=biber]{biblatex}
 
@@ -85,12 +86,14 @@
 
     I denna undersökning kommer systemet utföra 10 generationer, med 20 neuronnät var. Varje generation kommer undersökas och sedan kommer det 12 sämsta neuronnät (de med lång inlärningstid eller dålig träffsäkerhet) raderas (+- några slumpmässignt valda ANN, för att populationen inte ska bli homogen). Nya nät skapas för att få populationen upp till 20 genom att slumpmässigt välja meta-variabler från två existerande nät. Sist så ändras en meta variabel helt slumpmässigt (en mutation).
 
+\newpage
+
   \section{Metod}
   För att jämföra de två olika metoder för att bestämma bästa meta-variabler användes CIFAR-10 databasen för input material. Själva processen av populationskapande, fitness evaluering och evolution är skriven av Matt Harvey \parencite{harvey2017} med några modifieringar för att spara minne gjord av Tomass Wilson. All kod skrevs i python 3.6 och kördes på Windows 10, och använder sig till huvuddel av keras och tensorflow paketen för att optimera och skapa neuronnäten. Versionerna av samtliga paket ses i tabell \ref{paketversioner}. Hårdvaran som användes i denna undersökning ses i tabell \ref{hårdvara}.
 
   Till först så testades den iterativa processen genom att köra brute.py filen. Alla 672 möjliga kombinationer meta-variabler testades och en slutsiffra på tiden hela processen tog antecknades. Detta ger en basnivå som kan jämföras med den evolutionära processen. Sedan kördes den evolutionära processen med 10 generationer av 20 neuronnät var genom att köra main.py filen, och tiden skrevs ned.
 
-\begin{table}[htb]
+\begin{table}[H]
     \centering
     \begin{tabular}{c|c}
       Paket & Version \\
@@ -110,7 +113,7 @@
     \label{paketversioner}
 \end{table}
 
-\begin{table}[htb]
+\begin{table}[H]
     \centering
     \begin{tabular}{c|c}
       Komponent & Specifikation \\
@@ -129,7 +132,7 @@
 
   Programmet slutar med att presentera de fem bästa neuronnät som den kunde hitta. Resultatet från den evolutionära processen visas i tabell \ref{evo}, och för den iterativa i tabell \ref{iterativ}. Totala tiden för den evolutionära algoritmen samt iterativa ses i tabell \ref{total}.
 
-\begin{table}[htb]
+\begin{table}[H]
     \centering
     \begin{tabular}{c|c|c|c|c}
       Träffsäkerhet & \#Neuroner & \#Lager & Akt-funk. & Opt-funk. \\
@@ -144,7 +147,7 @@
     \label{evo}
 \end{table}
 
-\begin{table}[htb]
+\begin{table}[H]
     \centering
     \begin{tabular}{c|c|c|c|c}
         Träffsäkerhet & \#Neuroner & \#Lager & Akt-funk. & Opt-funk. \\
@@ -159,7 +162,7 @@
     \label{iterativ}
 \end{table}
 
-\begin{table}[htb]
+\begin{table}[H]
     \centering
     \begin{tabular}{c|c|c}
       Inställning & Tid & Maximal Träffsäkerhet\\
@@ -175,7 +178,7 @@
 
 För att få ett närmare inblick i den evolutionära processen så kördes den i flera omgångar och träffsäkerhet för varje omgång/generation presenteras i figur \ref{generation}.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 	\begin{axis}[
